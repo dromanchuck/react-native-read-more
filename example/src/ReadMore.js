@@ -7,7 +7,9 @@ import {
   LayoutAnimation,
   Platform,
   UIManager,
+  TouchableWithoutFeedback
 } from 'react-native';
+
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -167,26 +169,33 @@ const ReadMore = ({
         {...textProps}>
         {children || ''}
         {seeMore && !collapsed && (
+          <TouchableWithoutFeedback onPress={toggle}>
+            <View style={{backgroundColor}}>
           <TextComponent
             {...additionalProps}
             {...restProps}
-            onPress={toggle}
             style={seeLessStyle}>
             {hiddenTextHeightWithSeeLess > hiddenTextHeight ? '\n' : ' '}
             {seeLessText}
           </TextComponent>
+          </View>
+          </TouchableWithoutFeedback>
         )}
       </TextComponent>
       {seeMore && collapsed && afterCollapsed && (
+        <TouchableWithoutFeedback onPress={toggle}>
         <View style={[styles.seeMoreContainer, {backgroundColor}]}>
+          <TextComponent {...additionalProps}
+            {...restProps}
+            style={[style, {marginRight: 5}]}>{ellipsis}</TextComponent>
           <TextComponent
             {...additionalProps}
             {...restProps}
-            onPress={toggle}
             style={[style, seeMoreStyle]}>
-            {`${ellipsis} ${seeMoreText}`}
+            {  `${seeMoreText}`}
           </TextComponent>
         </View>
+        </TouchableWithoutFeedback>
       )}
     </View>
   );
@@ -205,7 +214,7 @@ const styles = StyleSheet.create({
   },
   seeMoreContainer: {
     position: 'absolute',
-    right: 0,
+    right: 5,
     bottom: 0,
     flexDirection: 'row',
   },
