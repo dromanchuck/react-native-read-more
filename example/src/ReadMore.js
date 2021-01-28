@@ -135,7 +135,8 @@ const ReadMore = ({
   }
 
   return (
-    <View style={wrapperStyle}>
+    <>
+    <View>
       {/* text component to measure see if see more is applicable and get height */}
       {mountHiddenTextOne && (
         <TextComponent
@@ -168,7 +169,11 @@ const ReadMore = ({
         style={style}
         {...textProps}>
         {children || ''}
-        {seeMore && !collapsed && (
+     
+      </TextComponent>
+    </View>
+    <View>
+    {seeMore && !collapsed && (
           <TouchableWithoutFeedback onPress={toggle}>
             <View style={{backgroundColor}}>
           <TextComponent
@@ -181,13 +186,9 @@ const ReadMore = ({
           </View>
           </TouchableWithoutFeedback>
         )}
-      </TextComponent>
-      {seeMore && collapsed && afterCollapsed && (
+    {seeMore && collapsed && afterCollapsed && (
         <TouchableWithoutFeedback onPress={toggle}>
         <View style={[styles.seeMoreContainer, {backgroundColor}]}>
-          <TextComponent {...additionalProps}
-            {...restProps}
-            style={[style, {marginRight: 5}]}>{ellipsis}</TextComponent>
           <TextComponent
             {...additionalProps}
             {...restProps}
@@ -197,7 +198,8 @@ const ReadMore = ({
         </View>
         </TouchableWithoutFeedback>
       )}
-    </View>
+      </View>
+    </>
   );
 };
 
@@ -213,9 +215,6 @@ const styles = StyleSheet.create({
     color: 'transparent',
   },
   seeMoreContainer: {
-    position: 'absolute',
-    right: 5,
-    bottom: 0,
     flexDirection: 'row',
   },
   seeMoreButton: {
@@ -261,7 +260,7 @@ ReadMore.defaultProps = {
   numberOfLines: 3,
   seeMoreText: 'See more',
   seeLessText: 'See less',
-  animate: true,
+  animate: false,
   backgroundColor: 'white',
   customTextComponent: Text,
   ellipsis: '...',
